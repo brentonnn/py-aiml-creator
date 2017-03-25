@@ -1,0 +1,73 @@
+<html>
+<body>
+
+Pattern:
+<input id="pattern" type="text">
+<br><br>
+
+Template type:<br>
+<input id="single" type="radio" name="templatetype" value="Single" onclick='showHide("block","none")' checked="checked"> Single
+<input id="random" type="radio" name="templatetype" value="Random" onclick='showHide("none", "block")' > Random
+<br><br>
+
+<div id="single-template">
+Template:
+<input id="template" type="text">
+</div>
+
+<div id="random-template" style="display:none;">
+Template (enter each template on a newline):<br>
+<textarea cols="25" rows="5"id="ranTextArea"></textarea>
+</div>
+
+
+<br><br>
+<input type="button" value="Add aiml" onClick="buildXML();">
+<br><br>
+<textarea id="ta" cols="120" rows="30"></textarea>
+
+
+
+<script>
+var counter = 1;
+var isRandom = false
+
+
+function showHide(x, y) {
+
+  document.getElementById("single-template").style.display=x;
+  document.getElementById("random-template").style.display=y;
+
+}
+
+function buildXML() {
+  pattern = document.getElementById("pattern").value
+  xml = "<aiml>\n"
+  if (document.getElementById('random').checked) {
+    xml += "<category>\n<pattern>" + pattern + "</pattern>\n<template>\n<random>\n"
+    var lines = document.getElementById("ranTextArea").value.split('\n');
+    for(var i = 0;i < lines.length;i++){
+      xml += "<li>" + lines[i] + "</li>\n";
+    }
+    xml += "</random>\n</tempalte>\n</category>\n\n"
+    //x = document.getElementsByName['rInputs'];
+    //for (var i = 0; i < x.length; i++) {
+    //  xml += "<li>" + x[i].value + "</li>";
+    //}
+    //xml += "</tempalte>\n</category>\n\n"
+  }
+  else {
+    template = document.getElementById('template').value
+    xml += "<category>\n<pattern>" + pattern + "</pattern>\n<template>" + template + "</template>\n</category>\n\n"
+
+  }
+
+  xmlText = document.getElementById("ta").value;
+  xmlText += xml + "<aiml>";
+
+  document.getElementById("ta").value = xmlText
+}
+
+</script>
+</body>
+</html>
