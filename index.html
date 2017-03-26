@@ -41,8 +41,8 @@ function showHide(x, y) {
 }
 
 function buildXML() {
-  pattern = document.getElementById("pattern").value
-  xml = "<aiml>\n"
+  pattern = document.getElementById("pattern").value.toUpperCase()
+  xml = ""
   if (document.getElementById('random').checked) {
     xml += "<category>\n<pattern>" + pattern + "</pattern>\n<template>\n<random>\n"
     var lines = document.getElementById("ranTextArea").value.split('\n');
@@ -63,7 +63,7 @@ function buildXML() {
   }
 
   xmlText = document.getElementById("ta").value;
-  xmlText += xml + "<aiml>";
+  xmlText += xml;
 
   document.getElementById("ta").value = xmlText
 }
