@@ -24,13 +24,34 @@ Template (enter each template on a newline):<br>
 <br><br>
 <input type="button" value="Add aiml" onClick="buildXML();">
 <br><br>
-<textarea id="ta"rows="30" style="width:100%;""></textarea>
+<textarea id="ta"rows="20" style="width:100%;"></textarea>
 
+<br> <br>
+<button onclick="clearXML();">Clear</button> <button onclick="download('test.aiml');">Save</button>
 
 
 <script>
 var counter = 1;
 var isRandom = false
+
+function download(filename) {
+  var text = '<aiml version="1.0.1" encoding="UTF-8">\n\n' + document.getElementById("ta").value + '\n</aiml>';
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+}
+
+function clearXML() {
+  document.getElementById("ta").value = ""
+
+}
 
 
 function showHide(x, y) {
